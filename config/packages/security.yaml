@@ -1,0 +1,51 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: ~ }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin_front:
+            pattern:   ^/front
+            anonymous: true
+
+        admin:
+            context:        main
+            provider:       magenta_user
+            pattern:        /system(.*)
+            form_login:
+                login_path:     /system/login
+                use_forward:    false
+                check_path:     /system/login_check
+                failure_path:   null
+                default_target_path: /system/dashboard
+                success_handler: magenta_admin_login_success_handler
+            logout:
+                path:           /system/logout
+                success_handler: magenta_admin_logout_handler
+            anonymous:          true
+            switch_user:        true
+
+        main:
+            anonymous: true
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/front, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/system/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/system/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/system/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/system/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/system, roles: ROLE_SONATA_ADMIN }

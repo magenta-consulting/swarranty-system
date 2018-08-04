@@ -1,0 +1,168 @@
+fos_ck_editor:
+    default_config: default
+    configs:
+        default:
+            # default toolbar plus Format button
+            toolbar:
+            - [Bold, Italic, Underline, -, Cut, Copy, Paste,
+              PasteText, PasteFromWord, -, Undo, Redo, -,
+              NumberedList, BulletedList, -, Outdent, Indent, -,
+              Blockquote, -, Image, Link, Unlink, Table]
+            - [Format, Maximize, Source]
+
+            filebrowserBrowseRoute: admin_magenta_swarrantymodel_media_media_ckeditor_browser
+            filebrowserBrowseRouteParameters:
+                provider: sonata.media.provider.file
+                context: default # Optional, to upload in a custom context
+
+            filebrowserImageBrowseRoute: admin_magenta_swarrantymodel_media_media_ckeditor_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+                context: default # Optional, to upload in a custom context
+
+            filebrowserUploadRoute: admin_magenta_swarrantymodel_media_media_ckeditor_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+                context: default # Optional, to upload in a custom context
+
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_magenta_swarrantymodel_media_media_ckeditor_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+                context: default # Optional, to upload in a custom context
+                format: big # Optional, media format or original size returned to editor
+
+sonata_formatter:
+    ckeditor:
+        templates:
+            browser: '@SonataFormatter/Ckeditor/browser.html.twig'
+            upload: '@MagentaSWarrantyAdmin/Ckeditor/upload.html.twig'
+
+    default_formatter: text
+    formatters:
+        markdown:
+            service: sonata.formatter.text.markdown
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig #keep this commented unless you are using media bundle.
+
+        text:
+            service: sonata.formatter.text.text
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        rawhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        richhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        twig:
+            service: sonata.formatter.text.twigengine
+            extensions: [] # Twig formatter cannot have extensions
+
+sonata_doctrine_orm_admin:
+    templates:
+        form: ['@MagentaSWarrantyAdmin/Form/fields.html.twig']
+
+sonata_admin:
+    title: 'Smart Warranty'
+    options:
+        title_mode: 'single_text'
+
+    security:
+        handler: magenta_swarranty.admin.security.handler.role
+#        handler: Magenta\Bundle\SWarrantyAdminBundle\Security\Handler\RoleSecurityHandler
+#        handler: sonata.admin.security.handler.role
+#        handler: app.admin.security.handler.role
+#        handler: sonata.admin.security.handler.acl
+        role_admin: ROLE_POWER_USER
+        role_super_admin: ROLE_ADMIN
+
+    templates:
+        layout: '@MagentaSWarrantyAdmin/standard_layout.html.twig'
+        user_block: '@MagentaSWarrantyAdmin/Core/user_block.html.twig'
+        list: '@MagentaSWarrantyAdmin/CRUD/list.html.twig'
+        delete: '@MagentaSWarrantyAdmin/CRUD/delete.html.twig'
+
+    assets:
+        extra_stylesheets:
+            - bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-red-light.min.css
+            - bundles/magentaswarrantyadmin/admin.css
+        remove_stylesheets:
+            - bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css
+    dashboard:
+        blocks: ~
+#            - { type: sonata.admin.block.admin_list, position: left }
+
+        groups:
+            customer:
+                label: dashboard.customer
+                icon: '<i class="fa fa-users"></i>'
+                items:
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Customer\CustomerAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Customer\WarrantyAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Customer\WarrantyCaseAdmin
+
+            product:
+                label: dashboard.product
+                icon: '<i class="fa fa-product-hunt"></i>'
+                items:
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Product\ProductAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Product\DealerAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Product\BrandAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Product\ServiceZoneAdmin
+
+            system:
+                label: dashboard.system
+                icon: '<i class="fa fa-database"></i>'
+                items:
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\User\UserAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\AccessControl\ACLAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Organisation\OrganisationAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Organisation\OrganisationMemberAdmin
+                    - Magenta\Bundle\SWarrantyAdminBundle\Admin\Messaging\MessageTemplateAdmin
+#                    - Sonata\MediaBundle\Admin\ORM\MediaAdmin
+                    - sonata.media.admin.media
+#                    - sonata.user.admin.group
+#                    - sonata.classification.admin.context
+#                    - sonata.classification.admin.category
+#                    - sonata.classification.admin.collection
+#                    - sonata.classification.admin.tag
+#                    - sonata.notification.admin.message
+
+    title_logo: https://www.magenta-consulting.com/images/logo.png
+    search: false
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+twig:
+    form_themes:
+            # other files
+#        - 'SonataMediaBundle:Form:media_widgets.html.twig'
+#        - 'BeanLocationBundle:Form:google_maps.html.twig'
+#        - 'SonataFormatterBundle:Form:formatter.html.twig'
+        - '@SonataFormatter/Form/formatter.html.twig'
+        - '@MagentaSWarrantyAdmin/Form/media_widgets.html.twig'
+        - '@MagentaSWarrantyAdmin/Form/datepicker.html.twig'
+        - '@MagentaSWarrantyAdmin/Form/fields.html.twig'
+    globals:
+        media_endpoint: '%MEDIA_API_BASE_URL%%MEDIA_API_PREFIX%'
