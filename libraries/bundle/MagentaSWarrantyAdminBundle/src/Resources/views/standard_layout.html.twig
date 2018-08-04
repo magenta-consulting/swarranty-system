@@ -1,0 +1,152 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+                {% block logo %}
+                    {% spaceless %}
+                        {% set org = currentOrganisation() %}
+                        {% if org is not empty and org.logo is not empty %}
+                            <a class="logo" href="{{ path('sonata_admin_dashboard') }}">
+                                <img src="{{ org.logo.id|privateMediumUrl }}" width="150px"/>
+                            </a>
+                        {% else %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endspaceless %}
+                {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .img-thumbnail {
+            cursor: pointer;
+        }
+
+        {# SKIN #}
+        .skin-red-light .navbar-top-links li {
+            color: #454545;
+        }
+
+        .skin-red-light .main-header .navbar .nav > li > a:hover {
+            color: #f6f6f6;
+            background-color: #dd4b39;
+        }
+
+        .nav > li > a:hover, .nav > li > a:active, .nav > li > a:focus, .skin-red-light .main-header .navbar .sidebar-toggle:hover, .skin-red-light .main-header li.user-header {
+            background-color: #dd4b39;
+        }
+
+        .skin-red-light .main-header .logo, .skin-red-light .main-header .navbar, .skin-red-light .main-header .navbar .nav > li > a, .skin-red-light .main-header .navbar .nav > li > a, .skin-red-light .breadcrumb > .active, .skin-red-light .main-header .navbar .sidebar-toggle, .skin-red-light .main-header .navbar .nav > li > a:active, .skin-red-light .main-header .navbar .nav > li > a:focus, .skin-red-light .main-header .navbar .nav .open > a, .skin-red-light .main-header .navbar .nav .open > a:hover, .skin-red-light .main-header .navbar .nav .open > a:focus, .skin-red-light .main-header .navbar .nav > .active > a {
+            color: #454545;
+        }
+
+        .skin-red-light .main-header .logo, .skin-red-light .main-header .navbar, .skin-red-light .main-header .logo, .skin-red-light .main-header .logo:hover {
+            background-color: #f8f8f8;
+        }
+
+        {# END SKIN #}
+
+        .sonata-ba-form form .row .col-md-12 .row {
+            /*display: flex;*/
+        }
+
+        .logo img {
+            max-width: 200px;
+        }
+
+        .decision-status {
+            padding-top: 7px;
+            margin-top: 7px;
+            margin-bottom: 7px;
+            border-top-width: 1px;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-bottom: 7px;
+            align-items: center;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1.42857143;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .decision-button, .decision-remarks {
+            margin: 7px 0px 7px 6px;
+        }
+
+        .list-action {
+            margin: 7px 0px 7px 0px;
+        }
+
+        .list-action:first-child {
+            margin-left: 7px;
+        }
+    </style>
+{% endblock %}
+
+{%- block javascripts -%}
+    {{ parent() }}
+    <script>
+        (function ($) {
+            /* ----------------------------------------------- */
+            /* ----------------------------------------------- */
+            /* OnLoad Page */
+            $(document).ready(function ($) {
+                $adminModal = $('#admin-modal');
+                $adminModalHeader = $('#admin-modal-header');
+                $adminModalBody = $('#admin-modal-body');
+                $adminModalFooter = $('#admin-modal-footer');
+
+                $('.img-thumbnail').on('click', function () {
+                    $adminModalHeader.hide();
+                    $adminModalBody.append('<img style="display: none;" class="loading" width="100%" src="' + $(this).data('src') + '" />');
+                    $adminModalBody.find('.loading').hide();
+                    $adminModalBody.find('.loading').load(function (e) {
+                        $(this).siblings().remove();
+                        $(this).show();
+                    })
+                })
+
+                $adminModal.on('hidden.bs.modal', function (e) {
+                    $adminModalHeader.show();
+                    $adminModalBody.html('<div class="text-center"><i class="fa fa-refresh fa-spin" style="font-size:200px;"><br/></i></div>');
+                });
+
+            });
+            /* OnLoad Window */
+            var init = function () {
+
+            };
+            window.onload = init;
+
+        })(jQuery);
+    </script>
+{%- endblock -%}
+
+{% trans_default_domain 'MagentaSWarrantyAdmin' %}
+
+            {% block body_attributes -%}
+                class="sonata-bc skin-red-light fixed
+                {% if app.request.cookies.get('sonata_sidebar_hide') -%}
+                    sidebar-collapse
+                {%- endif -%}"
+            {%- endblock -%}
+
+{%- block sonata_header -%}
+    {{ parent() }}
+    <!-- Modal -->
+    <div class="modal fade" id="admin-modal" tabindex="-1" role="dialog" aria-labelledby="admin-modal-label">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="admin-modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="admin-modal-label"></h4>
+                </div>
+                <div class="modal-body" id="admin-modal-body">
+                    <div class="text-center"><i class="fa fa-refresh fa-spin" style="font-size:200px;"><br/></i></div>
+                </div>
+                <div class="modal-footer" id="admin-modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endblock -%}

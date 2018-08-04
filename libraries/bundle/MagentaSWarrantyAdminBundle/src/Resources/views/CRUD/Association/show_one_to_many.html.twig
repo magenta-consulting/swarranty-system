@@ -1,0 +1,122 @@
+{#{% extends '@SonataAdmin/CRUD/Association/show_one_to_many.html.twig' %}#}
+
+{#<th{% if(is_diff|default(false)) %} class="diff"{% endif %}>{% block name %}{{ field_description.label|trans({}, field_description.translationDomain ?: admin.translationDomain) }}{% endblock %}</th>#}
+
+<td>
+    {%- block field -%}
+        {% set route_name = field_description.options.route.name %}
+        {% spaceless %}
+            {% if field_description.type == 'image' %}
+                <ul class="sonata-ba-show-one-to-many {{ field_description.type == 'image'?'container-show-one-to-many-image':'' }}">
+                    {#{% set route_name = field_description.options.route.name %}#}
+                    {% for element in value %}
+                        {% if field_description.hasassociationadmin
+                            and field_description.associationadmin.hasRoute(route_name)
+                            and field_description.associationadmin.hasAccess(route_name, element) %}
+                            <li style="justify-content: space-between;display: flex;">
+                                <!-- Button trigger modal -->
+                                <span class="img-thumbnail"
+                                      data-src="{{ field_description.associationadmin.getUrlsafeIdentifier(element)|privateMediumUrl('reference') }}"
+                                      data-toggle="modal" data-target="#admin-modal">
+                                    <img src="{{ field_description.associationadmin.getUrlsafeIdentifier(element)|privateMediumUrl }}"/>
+                                </span>
+                            </li>
+                        {% else %}
+                            <li>
+                                {% if field_description.type == 'image' %}
+                                    <!-- Button trigger modal -->
+                                    <span class="img-thumbnail"
+                                          data-src="{{ field_description.associationadmin.getUrlsafeIdentifier(element)|privateMediumUrl('reference') }}"
+                                          data-toggle="modal" data-target="#admin-modal">
+                                    <img src="{{ field_description.associationadmin.getUrlsafeIdentifier(element)|privateMediumUrl }}"/>
+                                </span>
+                                {% elseif field_description.name == 'warranties' or field_description.type == 'warranty' %}
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% elseif field_description.name == 'warranties' or field_description.type == 'warranty' %}
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Warranty Number</th>
+                        <th>Model Number</th>
+                        <th>Expiry Date</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for element in value %}
+                        <tr>
+                            {# {{ element|render_relation_element(field_description) }} #}
+                            <td>
+                                <a href="{{ field_description.associationadmin.generateObjectUrl(route_name, element, field_description.options.route.parameters) }}">
+                                    {{ element.number }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ field_description.associationadmin.generateObjectUrl(route_name, element, field_description.options.route.parameters) }}">
+                                    {{ element.product.modelNumber }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ field_description.associationadmin.generateObjectUrl(route_name, element, field_description.options.route.parameters) }}">
+                                    {{ element.expiryDate|date('d - m - Y') }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_magenta_swarrantymodel_customer_warranty_customer_warrantycase_create',{'organisation': element.customer.organisation.id,'id':element.id}) }}"
+                                   class="btn btn-primary" style="margin-bottom: 7px;">Create New Case</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            {% endif %}
+        {% endspaceless %}
+    {%- endblock -%}
+
+</td>
+
+{% block field_compare %}
+    {% if(value_compare is defined) %}
+        <td>
+            {% set value = value_compare %}
+            {{ block('field') }}
+        </td>
+    {% endif %}
+{% endblock %}
+
+{%- block stylesheets -%}
+    <style>
+        .container-show-one-to-many-image {
+            display: flex;
+            overflow: inherit;
+            white-space: normal;
+            flex-wrap: wrap;
+            word-wrap: normal;
+            width: auto;
+            list-style-type: none;
+        }
+    </style>
+{%- endblock -%}
+{%- block javascripts -%}
+    <script>
+        (function ($) {
+            /* ----------------------------------------------- */
+            /* ----------------------------------------------- */
+            /* OnLoad Page */
+            $(document).ready(function ($) {
+
+            });
+            /* OnLoad Window */
+            var init = function () {
+
+            };
+            window.onload = init;
+
+        })(jQuery);
+    </script>
+{%- endblock -%}
