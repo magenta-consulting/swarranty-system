@@ -6,11 +6,15 @@ magenta_custom_routes:
     resource: "@MagentaSWarrantyAdminBundle/Resources/config/routing/front_routes.yaml"
     prefix: /front
 
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: '%SYSTEM_PREFIX%'
 
 _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: '%SYSTEM_PREFIX%'
+
 
 
 #fos_user_security:
