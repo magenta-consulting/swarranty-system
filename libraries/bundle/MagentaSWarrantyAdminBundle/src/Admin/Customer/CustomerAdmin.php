@@ -169,6 +169,7 @@ class CustomerAdmin extends BaseAdmin {
 			->add('email', null, [ 'editable' => true, 'label' => 'form.label_email' ])
 			->add('telephone', null, [ 'editable' => true, 'label' => 'form.label_telephone' ])
 			->add('homeAddress', null, [ 'editable' => true, 'label' => 'form.label_address' ])
+			
 			->add('enabled', null, [ 'editable' => true, 'label' => 'form.label_enabled' ]);
 
 //		$listMapper->add('positions', null, [ 'template' => '::admin/user/list__field_positions.html.twig' ]);
@@ -182,6 +183,7 @@ class CustomerAdmin extends BaseAdmin {
 			->add('email', null, [ 'label' => 'form.label_email' ])
 			->add('dialingCode', null, [ 'label' => 'form.label_dialing_code' ])
 			->add('telephone', null, [ 'label' => 'form.label_telephone' ])
+			->add('addressUnitNumber', null, [ 'label' => 'form.label_address_unit_number' ])
 			->add('homeAddress', null, [ 'label' => 'form.label_address' ])
 			->add('homePostalCode', null, [ 'required' => true, 'label' => 'form.label_postal_code' ])
 //			->add('person.familyName',null,['label' => 'form.label_family_name' ])

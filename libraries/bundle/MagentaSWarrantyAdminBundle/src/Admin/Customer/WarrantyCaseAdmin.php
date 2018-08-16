@@ -43,10 +43,13 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\CollectionType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
+use Sonata\CoreBundle\Form\Type\DateRangePickerType;
+use Sonata\CoreBundle\Form\Type\DateRangeType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\DoctrineORMAdminBundle\Admin\FieldDescription;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -57,6 +60,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class WarrantyCaseAdmin extends BaseAdmin {
@@ -324,7 +328,7 @@ class WarrantyCaseAdmin extends BaseAdmin {
 		);
 		
 		$listMapper
-			->add('number', null, [ 'label' => 'form.label_number' ])
+			->add('number', 'number', [ 'label' => 'form.label_number' ])
 			->add('priority', 'choice', [
 				'editable' => true,
 				'label'    => 'form.label_priority',
@@ -345,6 +349,9 @@ class WarrantyCaseAdmin extends BaseAdmin {
 			->add('serviceNotes', 'serviceNotes', [
 				'label'               => 'form.label_service_notes',
 				'associated_property' => 'description'
+			])
+			->add('specialRemarks', 'html', [
+				'label' => 'form.label_special_remarks'
 			])
 			->add('assigneeHistory', null, [
 				'label'               => 'form.label_assignee_history',
@@ -380,6 +387,16 @@ class WarrantyCaseAdmin extends BaseAdmin {
 ////			'html'
 //		];
 //	}
+	
+	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
+		$statusFilter = $this->getRequest()->query->get('statusFilter');
+		if( ! empty($statusFilter)) {
+			$parameters['statusFilter'] = $statusFilter;
+		}
+		
+		return parent::generateUrl($name, $parameters, $absolute);
+	}
+	
 	
 	protected function getAutocompleteRouteParameters() {
 		/** @var WarrantyCase $case */
@@ -548,10 +565,21 @@ class WarrantyCaseAdmin extends BaseAdmin {
 						'required' => false,
 						'label'    => false, //'form.label_case_detail'
 					]);
+
+//				$formMapper->end();
+//
+//				$formMapper
+//					->with('form_group.case_details', [ 'class' => 'col-md-6' ]);
+				
+				$formMapper
+					->add('specialRemarks', CKEditorType::class, [
+						'required' => false,
+						'label'    => 'form.label_special_remarks'
+					]);
 				$formMapper->end();
 			} else {
 			
-				
+			
 			}
 		}
 		
@@ -711,6 +739,44 @@ class WarrantyCaseAdmin extends BaseAdmin {
 			->add('warranty.customer.name')//			->add('locked')
 		;
 		parent::configureDatagridFilters($filterMapper);
+		$filterMapper->add('createdAt', DateRangeFilter::class, [
+			'field_type'    => DateRangePickerType::class,
+			'field_options' => [
+				'field_options_start' => [
+					'format'                => 'dd-MM-yyyy',
+					'placeholder'           => 'dd-mm-yyyy',
+					'datepicker_use_button' => false,
+					'attr'                  => [ 'class' => 'anh-yeu-em' ]
+				],
+				'field_options_end'   => [
+					'format'                => 'dd-MM-yyyy',
+					'placeholder'           => 'dd-mm-yyyy',
+					'datepicker_use_button' => false,
+				],
+			],
+			
+			'label'       => 'form.label_opened_on',
+			'show_filter' => true
+		]);
+		$filterMapper->add('closedAt', DateRangeFilter::class, [
+			'field_type'    => DateRangePickerType::class,
+			'field_options' => [
+				'field_options_start' => [
+					'format'                => 'dd-MM-yyyy',
+					'placeholder'           => 'dd-mm-yyyy',
+					'datepicker_use_button' => false,
+				],
+				'field_options_end'   => [
+					'format'                => 'dd-MM-yyyy',
+					'placeholder'           => 'dd-mm-yyyy',
+					'datepicker_use_button' => false,
+				],
+			],
+			
+			'label'       => 'form.label_closed_on',
+			'show_filter' => true
+		]);
+		
 	}
 	
 	
