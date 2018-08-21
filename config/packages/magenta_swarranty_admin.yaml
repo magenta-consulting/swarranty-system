@@ -4,7 +4,7 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     SYSTEM_PREFIX: '%env(SYSTEM_PREFIX)%'
-    
+
 fos_ck_editor:
     default_config: default
     configs:
@@ -106,6 +106,7 @@ sonata_admin:
         user_block: '@MagentaSWarrantyAdmin/Core/user_block.html.twig'
         list: '@MagentaSWarrantyAdmin/CRUD/list.html.twig'
         delete: '@MagentaSWarrantyAdmin/CRUD/delete.html.twig'
+        base_list_field: '@MagentaSWarrantyAdmin/CRUD/list_field.html.twig'
 
     assets:
         extra_stylesheets:
