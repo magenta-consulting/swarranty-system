@@ -86,6 +86,10 @@ sonata_formatter:
 sonata_doctrine_orm_admin:
     templates:
         form: ['@MagentaSWarrantyAdmin/Form/fields.html.twig']
+        types:
+            list:
+                choice: '@MagentaSWarrantyAdmin/CRUD/list_choice.html.twig'
+
 
 sonata_admin:
     title: 'Smart Warranty'
