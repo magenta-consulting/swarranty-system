@@ -95,7 +95,7 @@ class UserAdmin extends BaseAdmin {
 	public function configureRoutes(RouteCollection $collection) {
 		parent::configureRoutes($collection);
 //		$collection->add('show_user_profile', $this->getRouterIdParameter() . '/show-user-profile');
-		
+	
 	}
 	
 	public function getTemplate($name) {
@@ -203,8 +203,7 @@ class UserAdmin extends BaseAdmin {
 					'multiple' => true,
 					'required' => false,
 				])
-				->end()
-			;
+				->end();
 			$formMapper->end();
 		}
 
@@ -229,18 +228,22 @@ class UserAdmin extends BaseAdmin {
 			$formMapper
 				->with('General')
 //                ->add('username')
-				->add('email', null, [ 'label' => 'list.label_email' ])
+				->add('email', null, [ 'label' => 'form.label_email' ])
 //                ->add('admin')
 				->add('plainPassword', TextType::class, [
-					'label'    => 'list.label_plain_password',
+					'label'    => 'form.label_password',
 					'required' => ( ! $this->getSubject() || is_null($this->getSubject()->getId())),
 				])
 				->end()
 				->with('Profile');
 			
 			$formMapper
-				->add('firstname', null, [ 'required' => false ])
-				->add('roles', null, [ 'required' => false ]);
+				->add('person.givenName', null, [ 'required' => false, 'label' => 'form.label_given_name' ])
+				->add('person.familyName', null, [
+					'required' => false,
+					'label'    => 'form.label_family_name'
+				])//				->add('roles', null, [ 'required' => false ])
+			;
 			
 			$formMapper->end();
 		}
