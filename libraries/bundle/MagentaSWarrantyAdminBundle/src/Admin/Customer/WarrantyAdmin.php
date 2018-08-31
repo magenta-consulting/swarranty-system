@@ -218,6 +218,7 @@ class WarrantyAdmin extends BaseAdmin {
 				'label'    => 'form.label_default_warranty_period'
 			])
 			->add('product.extendedWarrantyPeriod', null, [ 'label' => 'form.label_extended_warranty_period' ])
+			->add('productSerialNumber', null, [ 'label' => 'form.label_product_serial_number' ])
 			->add('expiryDate', null, [ 'label' => 'form.label_warranty_expiry', 'format' => 'd - m - Y' ])
 			->add('dealer.name', null, [ 'label' => 'form.label_dealer' ])
 			->end();
@@ -391,6 +392,10 @@ class WarrantyAdmin extends BaseAdmin {
 			'class'          => null
 		]);
 		$formMapper->add('extendedWarrantyPeriodApproved', null, []);
+		$formMapper->add('productSerialNumber', null, [
+			'required' => true,
+			'label'    => 'form.label_product_serial_number',
+		]);
 		$formMapper->add('purchaseDate', DatePickerType::class, [
 			'required'              => true,
 			'format'                => 'dd-MM-yyyy',
