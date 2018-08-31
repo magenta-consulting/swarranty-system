@@ -231,6 +231,7 @@ class WarrantyAdmin extends BaseAdmin {
 		           ->add('customer.name', null, [ 'label' => 'form.label_name' ])
 		           ->add('customer.telephone', null, [ 'label' => 'form.label_telephone' ])
 		           ->add('customer.email', null, [ 'label' => 'form.label_email' ])
+		           ->add('customer.addressUnitNumber', null, [ 'label' => 'form.label_address_unit_number' ])
 		           ->add('customer.homeAddress', null, [ 'label' => 'form.label_address' ])
 		           ->add('customer.homePostalCode', null, [ 'label' => 'form.label_postal_code' ])
 		           ->end()
@@ -326,6 +327,10 @@ class WarrantyAdmin extends BaseAdmin {
 			->add('customer.email', null, [ 'label' => 'form.label_email' ])
 			->add('customer.dialingCode', NumberType::class, [ 'label' => 'form.label_dialing_code' ])
 			->add('customer.telephone', null, [ 'required' => true, 'label' => 'form.label_telephone' ])
+			->add('customer.addressUnitNumber', null, [
+				'required' => false,
+				'label'    => 'form.label_address_unit_number'
+			])
 			->add('customer.homeAddress', null, [ 'required' => false, 'label' => 'form.label_address' ])
 			->add('customer.homePostalCode', null, [ 'required' => false, 'label' => 'form.label_postal_code' ]);
 		$formMapper->end();
