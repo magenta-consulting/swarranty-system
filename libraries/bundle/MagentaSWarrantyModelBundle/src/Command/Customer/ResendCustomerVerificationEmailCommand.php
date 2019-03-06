@@ -73,6 +73,9 @@ class ResendCustomerVerificationEmailCommand extends Command
         foreach ($customers as $customer) {
             $counter++;
             $output->writeln('------ ' . $counter . ' -------');
+            if($counter < 84){
+                continue;
+            }
             $c = $customer;
             $email = $c->getEmail();
 
@@ -110,7 +113,7 @@ class ResendCustomerVerificationEmailCommand extends Command
             ;
 
             $output->writeln('Sending email to '.$email);
-//            $this->mailer->send($message);
+            $this->mailer->send($message);
 
             $output->writeln('Flushing');
             $manager->flush();
