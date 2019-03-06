@@ -66,7 +66,8 @@ class ResendCustomerVerificationEmailCommand extends Command
         if (0 === count($customers)) {
             $output->write('No Email to work with');
         }
-
+    
+        $output->writeln('Found ' . count($customers));
         /** @var Customer $customer */
         foreach ($customers as $customer) {
             $c = $customer;
@@ -106,7 +107,7 @@ class ResendCustomerVerificationEmailCommand extends Command
             ;
 
             $output->writeln('Sending email to '.$email);
-            $this->mailer->send($message);
+//            $this->mailer->send($message);
 
             $output->writeln('Flushing');
             $manager->flush();
