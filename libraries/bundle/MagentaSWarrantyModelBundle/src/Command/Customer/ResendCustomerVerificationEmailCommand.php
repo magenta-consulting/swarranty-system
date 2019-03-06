@@ -79,7 +79,7 @@ class ResendCustomerVerificationEmailCommand extends Command
             if (empty($email)) {
                 $output->write('Empty Email from '.$c->getName());
 
-                return;
+                continue;
             }
 
             /** @var Registration $reg */
