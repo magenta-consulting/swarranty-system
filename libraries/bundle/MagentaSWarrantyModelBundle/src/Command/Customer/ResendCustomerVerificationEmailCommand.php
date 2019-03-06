@@ -68,8 +68,11 @@ class ResendCustomerVerificationEmailCommand extends Command
         }
     
         $output->writeln('Found ' . count($customers));
+        $counter = 0;
         /** @var Customer $customer */
         foreach ($customers as $customer) {
+            $counter++;
+            $output->writeln('------ ' . $counter . ' -------');
             $c = $customer;
             $email = $c->getEmail();
 
