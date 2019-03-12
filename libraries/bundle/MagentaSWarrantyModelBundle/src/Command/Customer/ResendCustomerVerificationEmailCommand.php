@@ -66,16 +66,9 @@ class ResendCustomerVerificationEmailCommand extends Command
         if (0 === count($customers)) {
             $output->write('No Email to work with');
         }
-    
-        $output->writeln('Found ' . count($customers));
-        $counter = 0;
+
         /** @var Customer $customer */
         foreach ($customers as $customer) {
-            $counter++;
-            $output->writeln('------ ' . $counter . ' -------');
-            if($counter < 84){
-                continue;
-            }
             $c = $customer;
             $email = $c->getEmail();
 
