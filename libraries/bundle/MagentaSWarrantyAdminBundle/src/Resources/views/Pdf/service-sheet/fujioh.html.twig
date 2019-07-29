@@ -174,15 +174,15 @@
           <table class="fullwidth title-200">
             <tr>
               <td title>Delivery Date: </td>
-              <td content colspan="2">{{ case.warranty.purchaseDate|date('d-m-Y') }}</td>
+              <td content colspan="3">{{ case.warranty.purchaseDate|date('d-m-Y') }}</td>
             </tr>
             <tr>
               <td title>Installed by: </td>
-              <td content colspan="2"></td>
+              <td content colspan="3"></td>
             </tr>
             <tr>
               <td title>Warranty Card No: </td>
-              <td content colspan="2"> {{ case.warranty.number }} </td>
+              <td content colspan="3"> {{ case.warranty.number }} </td>
             </tr>
             <tr>
               <td title>Warranty: </td>
@@ -190,11 +190,12 @@
                 <input type="checkbox" name="warranty" value="Yes" id="warranty-yes"
                        {% if not case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-yes">Yes</label>
+                <br>
                 <input type="checkbox" name="warranty" value="No" id="warranty-no"
                        {% if case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-no">No</label>
               </td>
-              <td rowspan="2">
+              <td rowspan="2" style="vertical-align: top">
                 Special Request
                 {{ case.specialRemarks }}
               </td>
