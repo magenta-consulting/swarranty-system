@@ -123,7 +123,8 @@
               <td title>Address: </td>
               <td content>
                 <div class="multiline">
-                  {{ case.warranty.customer.homeAddress | replace({case.warranty.customer.homePostalCode: ''})   }}
+                  {% set postalCode = case.warranty.customer.homePostalCode %}
+                  {{ case.warranty.customer.homeAddress | replace({postalCode: ''})   }}
                 </div>
               </td>
             </tr>
@@ -136,7 +137,7 @@
             <tr>
               <td title>&nbsp;</td>
               <td content>
-                {{ case.warranty.customer.homePostalCode }}
+                {{ postalCode }}
               </td>
             </tr>
             {#<tr>#}
