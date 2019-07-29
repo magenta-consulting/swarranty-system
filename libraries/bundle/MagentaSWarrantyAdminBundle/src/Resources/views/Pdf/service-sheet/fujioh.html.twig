@@ -186,26 +186,26 @@
             </tr>
             <tr>
               <td title>Warranty: </td>
-              <td>
+              <td  rowspan="2">
                 <input type="checkbox" name="warranty" value="Yes" id="warranty-yes"
                        {% if not case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-yes">Yes</label>
-                <br>
+
                 <input type="checkbox" name="warranty" value="No" id="warranty-no"
                        {% if case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-no">No</label>
               </td>
-              <td rowspan="2" style="vertical-align: top">
-                Special Request
+              <td style="vertical-align: top" rowspan="2" colspan="2">
+                Special Request:
                 {{ case.specialRemarks }}
               </td>
             </tr>
             <tr>
               <td title>Date & Time of Service: </td>
-              <td content>
+              <td content colspan="2">
                 {{ case.appointmentAt | date('d/m/Y H:i') }} - {{ case.appointmentTo | date('H:i') }}
               </td>
-              <td>
+              <td colspan="2">
               </td>
             </tr>
           </table>
