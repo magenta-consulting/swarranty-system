@@ -124,7 +124,7 @@
               <td content>
                 <div class="multiline">
                   {% set postalCode = case.warranty.customer.homePostalCode %}
-                  {{ case.warranty.customer.homeAddress | replace({postalCode: ''})   }}
+                  {{ case.warranty.customer.homeAddress | replace({(postalCode): ''})   }}
                 </div>
               </td>
             </tr>
@@ -201,7 +201,7 @@
             </tr>
             <tr>
               <td title>Date & Time of Service: </td>
-              <td content colspan="2">
+              <td content>
                 {{ case.appointmentAt | date('d/m/Y H:i') }} - {{ case.appointmentTo | date('H:i') }}
               </td>
               </td>
