@@ -186,16 +186,15 @@
             </tr>
             <tr>
               <td title>Warranty: </td>
-              <td  rowspan="2">
+              <td  colspan="2">
                 <input type="checkbox" name="warranty" value="Yes" id="warranty-yes"
                        {% if not case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-yes">Yes</label>
-
                 <input type="checkbox" name="warranty" value="No" id="warranty-no"
                        {% if case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-no">No</label>
               </td>
-              <td style="vertical-align: top" rowspan="2">
+              <td style="vertical-align: top" rowspan="2" colspan="1">
                 Special Request:
                 {{ case.specialRemarks }}
               </td>
