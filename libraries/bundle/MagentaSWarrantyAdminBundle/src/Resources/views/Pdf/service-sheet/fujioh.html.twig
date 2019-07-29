@@ -123,7 +123,7 @@
               <td title>Address: </td>
               <td content>
                 <div class="multiline">
-                  {{ case.warranty.customer.homeAddress  }}
+                  {{ case.warranty.customer.homeAddress | replace({case.warranty.customer.homePostalCode: ''})   }}
                 </div>
               </td>
             </tr>
@@ -173,15 +173,15 @@
           <table class="fullwidth title-200">
             <tr>
               <td title>Delivery Date: </td>
-              <td content>{{ case.warranty.purchaseDate|date('d-m-Y') }}</td>
+              <td content colspan="2">{{ case.warranty.purchaseDate|date('d-m-Y') }}</td>
             </tr>
             <tr>
               <td title>Installed by: </td>
-              <td content></td>
+              <td content colspan="2"></td>
             </tr>
             <tr>
               <td title>Warranty Card No: </td>
-              <td content> {{ case.warranty.number }} </td>
+              <td content colspan="2"> {{ case.warranty.number }} </td>
             </tr>
             <tr>
               <td title>Warranty: </td>
@@ -200,10 +200,9 @@
             </tr>
             <tr>
               <td title>Date & Time of Service: </td>
-              <td content>
+              <td content colspan="2">
                 {{ case.appointmentAt | date('d/m/Y H:i') }} - {{ case.appointmentTo | date('H:i') }}
               </td>
-              <td content>
               </td>
             </tr>
           </table>
