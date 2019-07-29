@@ -190,13 +190,13 @@
                 <input type="checkbox" name="warranty" value="Yes" id="warranty-yes"
                        {% if not case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-yes">Yes</label>
-
+                <br>
                 <input type="checkbox" name="warranty" value="No" id="warranty-no"
                        {% if case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-no">No</label>
               </td>
               <td style="vertical-align: top" rowspan="2" colspan="2">
-                Special Request:
+                <center>Special Request:</center>
                 {{ case.specialRemarks }}
               </td>
             </tr>
