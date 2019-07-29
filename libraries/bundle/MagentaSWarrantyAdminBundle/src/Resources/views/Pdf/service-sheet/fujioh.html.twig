@@ -113,7 +113,7 @@
             </tr>
             <tr>
               <td title>Home Contact: </td>
-              <td content></td>
+              <td content> {{ case.warranty.customer.telephone }} </td>
             </tr>
             <tr>
               <td title>Mobile Contact: </td>
@@ -123,17 +123,21 @@
               <td title>Address: </td>
               <td content>
                 <div class="multiline">
-                  {{ case.warranty.customer.addressUnitNumber }}
+                  {{ case.warranty.customer.homeAddress  }}
                 </div>
               </td>
             </tr>
             <tr>
               <td title>&nbsp;</td>
-              <td content>{{ case.warranty.customer.homeAddress  }}</td>
+              <td content>
+                {{ case.warranty.customer.addressUnitNumber }}
+                </td>
             </tr>
             <tr>
               <td title>&nbsp;</td>
-              <td content></td>
+              <td content>
+                {{ case.warranty.customer.homePostalCode }}
+              </td>
             </tr>
             {#<tr>#}
             {#<td title>&nbsp;</td>#}
@@ -148,7 +152,7 @@
           </table>
         </div>
         <div class="col-6">
-          <table class="fullwidth title-100">
+          <table class="fullwidth title-200">
             <tr>
               <td title>Model No: </td>
               <td content>{{ case.warranty.product.modelNumber }}</td>
@@ -189,11 +193,17 @@
                        {% if case.isWarrantyExpired %}checked="checked"{% endif %}
                 ><label for="warranty-no">No</label>
               </td>
+              <td rowspan="2">
+                Special Request
+                {{ case.specialRemarks }}
+              </td>
             </tr>
             <tr>
               <td title>Date & Time of Service: </td>
               <td content>
                 {{ case.appointmentAt | date('d/m/Y H:i') }} - {{ case.appointmentTo | date('H:i') }}
+              </td>
+              <td content>
               </td>
             </tr>
           </table>
@@ -202,12 +212,19 @@
       <div class="row">
         <div class="col-12">
 
-          <table border="1px" class="fullwidth title-180">
-            <tr>
-              <td title style="border-right: none; border-bottom: none"><p><b>Fault Description: </b></p></td>
-              <td style="border-left: none;border-bottom:none;">{{ case.description|raw }} </td>
-            </tr>
-          </table>
+{#          <table border="1px" class="fullwidth title-180">#}
+{#            <tr>#}
+{#              <td title style="border-right: none; border-bottom: none"><p><b>Fault Description: </b></p></td>#}
+{#              <td style="border-left: none;border-bottom:none;"> </td>#}
+{#            </tr>#}
+{#          </table>#}
+
+            <div style="margin-bottom: 5px; border: 1px solid black; min-height: 160px; padding: 5px 2px" class="fullwidth">
+                <b>Fault Analysis: </b>
+
+                    <p style="margin-bottom: 0px">{{ case.description|raw }}</p>
+
+            </div>
 
 
           <div style="border: 1px solid black; min-height: 160px; padding: 5px 2px" class="fullwidth">
@@ -333,7 +350,7 @@
           <div class="row">
             <div>
               <b><u>Customer Acknowledgement</u></b><br>
-              I comfirm that the above work/services has been completed to my satisfaction and acknowledge the following conditions :
+              I confirm that the above work/services has been completed to my satisfaction and acknowledge the following conditions :
             </div>
             <div style="margin-top:10px;">
               (i) Fujioh Int'l Tdg Pte Ltd provides one (1) month warranty on service and three(3) months on parts replaced.</div>
