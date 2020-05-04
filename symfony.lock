@@ -2,18 +2,6 @@
     "aws/aws-sdk-php": {
         "version": "3.64.5"
     },
-    "beancomponent/devtool-bundle": {
-        "version": "0.1.1"
-    },
-    "beancomponent/organization": {
-        "version": "0.1.1"
-    },
-    "beancomponent/person": {
-        "version": "0.1.0"
-    },
-    "beancomponent/thing": {
-        "version": "0.1.1"
-    },
     "cocur/slugify": {
         "version": "v3.1"
     },
