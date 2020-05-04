@@ -13,7 +13,6 @@ namespace Magenta\Bundle\SWarrantyModelBundle\Command\Customer;
 use Doctrine\ORM\EntityManager;
 use Magenta\Bundle\SWarrantyModelBundle\Entity\Customer\Customer;
 use Magenta\Bundle\SWarrantyModelBundle\Entity\System\Thing;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,13 +24,13 @@ class CleanUpDuplicatedCustomerCommand extends Command
 {
     protected static $defaultName = 'magenta:customer:clean-up-duplicates';
 
-    /** @var RegistryInterface */
+    /** @var \Doctrine\Persistence\ManagerRegistry $registry */
     private $registry;
 
     /** @var EntityManager */
     private $entityManager;
 
-    public function __construct(RegistryInterface $registry, EntityManager $em)
+    public function __construct(\Doctrine\Persistence\ManagerRegistry  $registry, EntityManager $em)
     {
         parent::__construct();
         $this->registry = $registry;

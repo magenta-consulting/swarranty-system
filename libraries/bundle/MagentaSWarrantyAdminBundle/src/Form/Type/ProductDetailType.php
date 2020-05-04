@@ -7,11 +7,10 @@ use Doctrine\Common\Collections\Collection;
 use Magenta\Bundle\SWarrantyAdminBundle\Admin\BaseAdmin;
 use Magenta\Bundle\SWarrantyModelBundle\Entity\Product\BrandCategory;
 use Magenta\Bundle\SWarrantyModelBundle\Entity\System\Thing;
-use Sonata\CoreBundle\Date\MomentFormatConverter;
-use Sonata\CoreBundle\Form\Type\DatePickerType;
+use Sonata\Form\Date\MomentFormatConverter;
+use Sonata\Form\Type\DatePickerType;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class ProductDetailType extends AbstractType {
-	/** @var RegistryInterface */
+	/** @var \Doctrine\Persistence\ManagerRegistry  */
 	private $registry;
 	/**
 	 * @var TranslatorInterface
@@ -41,7 +40,7 @@ class ProductDetailType extends AbstractType {
 	 */
 	private $formatConverter;
 	
-	public function __construct(RegistryInterface $r, MomentFormatConverter $formatConverter, TranslatorInterface $translator = null) {
+	public function __construct(\Doctrine\Persistence\ManagerRegistry $r, MomentFormatConverter $formatConverter, TranslatorInterface $translator = null) {
 		$this->registry        = $r;
 		$this->formatConverter = $formatConverter;
 		$this->translator      = $translator;
