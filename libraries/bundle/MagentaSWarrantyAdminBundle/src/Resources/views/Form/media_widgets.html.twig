@@ -27,13 +27,13 @@
                     {% if value.contentType != 'application/pdf' %}
                     <!-- Button trigger modal -->
                     <span class="img-thumbnail"
-                          data-src="{{ privateMediumUrl(value.id,'reference') }}"
+                          data-src="{{ privateMediumUrl(value.id,'reference', value.receiptImageWarranty.organisation.system.adminToken) }}"
                           data-toggle="modal" data-target="#admin-modal">
-                                    <img src="{{ privateMediumUrl(value.id,'admin') }}"
+                                    <img src="{{ privateMediumUrl(value.id,'admin', value.receiptImageWarranty.organisation.system.adminToken) }}"
                                          class="img-polaroid media-object" width="200"/>
                     </span>
                     {% else %}
-                        <a href="{{ privateMediumUrl(value.id,'reference') }}" target="_blank">
+                        <a href="{{ privateMediumUrl(value.id,'reference', value.receiptImageWarranty.organisation.system.adminToken) }}" target="_blank">
                                     <img src="{{ asset('pdf.png') }}"
                                          class="img-polaroid media-object" width="200"/>
                         </a>
