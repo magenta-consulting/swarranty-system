@@ -125,6 +125,12 @@ class Registration implements ThingChildInterface
     protected $addressUnitNumber;
 
     /**
+     * @var string|null
+     * @ORM\Column(name="token", length=250, nullable=true)
+     */
+    protected $token;
+
+    /**
      * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -616,5 +622,21 @@ class Registration implements ThingChildInterface
     public function setEmailSent(bool $emailSent): void
     {
         $this->emailSent = $emailSent;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string|null $tokenfit
+     */
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
     }
 }
